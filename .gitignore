@@ -1,0 +1,19 @@
+# Ignore the build directory created by CMake
+build/
+bin/
+
+#Qt specific
+*.user
+*.moc
+*.qrc
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+
+#Compiled binaries
+*.exe
+*.out
+*.app
+
+#System files
+.DS_Store
