@@ -12,12 +12,12 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 # Find Qt (Widgets module)
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt5 REQUIRED COMPONENTS Widgets)
 
 add_executable(SVGEditor
     main.cpp
     qt_call.cpp
-    canvas.cpp
+    qt_canvas.cpp
 )
 
 target_include_directories(SVGEditor PRIVATE
@@ -25,5 +25,5 @@ target_include_directories(SVGEditor PRIVATE
 )
 
 target_link_libraries(SVGEditor
-    Qt6::Widgets
+    Qt5::Widgets
 )
