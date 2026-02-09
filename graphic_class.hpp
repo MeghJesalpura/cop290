@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
 
 /*This is the main superclass which will be inherited into the different shapes*/
 class GraphicClass{

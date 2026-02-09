@@ -17,3 +17,6 @@ ui_*.h
 
 #System files
 .DS_Store
+
+#CMakeLists
+CMakeLists.txt
