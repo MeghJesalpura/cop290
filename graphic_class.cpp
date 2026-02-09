@@ -1,1 +1,9 @@
-#include graphic_class.hpp
+#include "graphic_class.hpp"
+
+GraphicClass::GraphicClass(){
+
+}
+
+GraphicClass::~GraphicClass(){
+
+}
