@@ -1,7 +1,11 @@
 #include "qt_call.hpp"
+#include <QAction> 
+#include <QMenu>
+#include <QMenuBar>
+#include <QToolBar>
 
 MainWindow::MainWindow(){
-    resize(320, 240);
+    resize(800, 600);
     setWindowTitle("SVG Editor");
     createActions();
     createToolBar();

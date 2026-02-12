@@ -1,10 +1,10 @@
 #include <QtWidgets>
 #include <QApplication>
-//will have to include header files for the different applications
+//including the file which contains MainWindow class
 #include "qt_call.hpp"
 
 int main(int argc, char *argv[]){
-    Qapplication app(argc, argv);
+    QApplication app(argc, argv);
     //Setup and show widgets here
     MainWindow w;
     w.show();

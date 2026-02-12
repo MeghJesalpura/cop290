@@ -15,7 +15,7 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt5 REQUIRED COMPONENTS Widgets)
 
 add_executable(SVGEditor
-    main.cpp
+    qt_main.cpp
     qt_call.cpp
     qt_canvas.cpp
 )
