@@ -1,8 +1,6 @@
 #ifndef qt_call_hpp
 #define qt_call_hpp
 
-#include <iostream>
-#include <string>
 #include <QMainWindow>
 #include "qt_canvas.hpp"
 /* CHECK : need to check whether this access specifier has to be public or private */

@@ -5,7 +5,7 @@
 #include <QToolBar>
 
 MainWindow::MainWindow(){
-    resize(800, 600);
+    resize(1200, 900);
     setWindowTitle("SVG Editor");
     createActions();
     createToolBar();
@@ -15,7 +15,8 @@ MainWindow::MainWindow(){
 }
 
 void MainWindow::createToolBar(){
-    fileToolBar = addToolBar(tr("File"));
+    QToolBar*fileToolBar = new QToolBar(tr("File"));
+    addToolBar(Qt::LeftToolBarArea, fileToolBar);
     fileToolBar->addAction(rectangle);
     fileToolBar->addAction(roundedRectangle);
     fileToolBar->addAction(circle);

@@ -24,8 +24,7 @@ class GraphicClass{
         void change_stroke_wt(int m_strokeWt);
         void change_fill_clr(int m_newClr);
         void move_shape(int m_LX, int m_LY, int m_RX, int m_RY);
-        void clone();//not sure about the parameters this will require
-        
+        void clone();//not sure about the parameters this will require   
 };
 
 #endif

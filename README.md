@@ -7,6 +7,7 @@
 
 ### File dependencies and structures:
 
-## 
+## Qt interactions:
+- 
 
 ### Git commits:
