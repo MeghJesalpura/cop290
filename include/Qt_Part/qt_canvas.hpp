@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <vector>
 #include <memory>
+#include "../mainSpace/GraphicClass.hpp"
 class Canvas : public QWidget {
     Q_OBJECT //this is a macro that is included for functionality of signals and slots in Qt
     private:

@@ -10,6 +10,7 @@ MainWindow::MainWindow(){
     createActions();
     createToolBar();
     createMenus();
+    connectActions();
     Canvas* canvas = new Canvas(this);
     setCentralWidget(canvas);
 }
@@ -69,4 +70,16 @@ void MainWindow::createActions(){
     paste = new QAction(tr("&Paste"), this);
     undo = new QAction(tr("&Undo"), this);
     redo = new QAction(tr("&Redo"), this);
+}
+
+void connectActions(){
+    connect(circle, &QAction::triggered, this, [this](){ set_current_tool(2); });
+    connect(rectangle, &QAction::triggered, this, [this](){ set_current_tool(0); });
+    connect(roundedRectangle, &QAction::triggered, this, [this](){ set_current_tool(1); });
+    connect(line, &QAction::triggered, this, [this](){ set_current_tool(3); });
+    connect(hexagon, &QAction::triggered, this, [this](){ set_current_tool(4); });
+    connect(freehand, &QAction::triggered, this, [this](){ set_current_tool(5); });
+    connect(text, &QAction::triggered, this, [this](){ set_current_tool(6); });
+    //Text, fill colour and other options won't be clickable but rather would show the palletes - to implement later
+    //need to connect file menu actions to their respective slots for functionality
 }

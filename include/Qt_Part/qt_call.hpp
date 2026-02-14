@@ -10,6 +10,7 @@ class MainWindow : public QMainWindow{
         void createToolBar();
         void createMenus();
         void createActions();
+        void connectActions();
     
     private:
         QAction* rectangle;

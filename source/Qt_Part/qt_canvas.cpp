@@ -8,7 +8,7 @@ Canvas::Canvas(QWidget* parent) : QWidget(parent){
     //need to call the base constructor of QWidget
     //setAttribute(Qt::WA_StaticContents);
     current_shape_id = -1; //initially no shape is selected
-    tot_id = -1;
+    tot_id = 0;
     state_fill_clr = "#FFFFFF"; //default fill color is white
     state_bdr_clr = "#000000"; //default border color is black
     state_bdr_wt = 1.0; //default border width is 1.0

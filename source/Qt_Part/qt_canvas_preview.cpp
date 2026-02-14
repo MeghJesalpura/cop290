@@ -15,7 +15,7 @@ void draw_preview(QPainter& painter, int tool, const QPoint& start_point, const 
         }
         
         case 2: {//Circle
-            int radius = qAbs(current_point.x() - start_point.x());
+            int radius = qMax(qAbs(current_point.x() - start_point.x()), qAbs(current_point.y() - start_point.y()));//modelled as in inkscape
             painter.drawEllipse(start_point, radius, radius);
             break;
         }
