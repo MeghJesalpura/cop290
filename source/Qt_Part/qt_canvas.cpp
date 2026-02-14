@@ -4,7 +4,8 @@
 
 Canvas::Canvas(QWidget* parent) : QWidget(parent) {
     //need to call the base constructor of QWidget
-    setAttribute(Qt::WA_StaticContents);
+    //setAttribute(Qt::WA_StaticContents);
+    
 }
     
 void Canvas::paintEvent(QPaintEvent* event) {
