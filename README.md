@@ -8,6 +8,7 @@
 ### File dependencies and structures:
 
 ## Qt interactions:
+- The functions paintEvent(), mouseReleaseEvent(), etc are called by Qt whenever such events happen on the Canvas widget.
 - 
 
 ## OOP Back-end related:
