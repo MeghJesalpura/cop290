@@ -1,4 +1,4 @@
-#include "qt_canvas_preview.hpp"
+#include "../../include/Qt_Part/qt_canvas_preview.hpp"
 
 void draw_preview(QPainter& painter, int tool, const QPoint& start_point, const QPoint& current_point){
     QPen pen(Qt::DashLine);//just to ensure that preview looks different from final shape

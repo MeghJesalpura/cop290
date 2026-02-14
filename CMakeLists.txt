@@ -12,18 +12,38 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 # Find Qt (Widgets module)
-find_package(Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui)
 
-add_executable(SVGEditor
+set(PROJECT_SOURCES
     ./source/Qt_Part/qt_main.cpp
     ./source/Qt_Part/qt_call.cpp
     ./source/Qt_Part/qt_canvas.cpp
+    ./source/Qt_Part/qt_canvas_preview.cpp
+    ./source/Qt_Part/qt_canvas_objCreate.cpp
+    ./source/graphic_class.cpp
+    ./source/Shapes/circle.cpp
+)
+
+set(PROJECT_HEADERS
+    ./include/Qt_Part/qt_call.hpp
+    ./include/Qt_Part/qt_canvas.hpp
+    ./include/Qt_Part/qt_canvas_preview.hpp
+    ./include/Qt_Part/qt_canvas_objCreate.hpp
+    ./include/graphic_class.hpp
+    ./include/Shapes/circle.hpp
+    ./include/point.hpp)
+
+add_executable(SVGEditor
+    ${PROJECT_SOURCES}
+    ${PROJECT_HEADERS}
 )
 
 target_include_directories(SVGEditor PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_link_libraries(SVGEditor
     Qt5::Widgets
+    Qt5::Core
+    Qt5::Gui
 )

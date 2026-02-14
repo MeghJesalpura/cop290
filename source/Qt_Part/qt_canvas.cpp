@@ -1,6 +1,6 @@
-#include "qt_canvas.hpp"
-#include "qt_canvas_preview.hpp"
-#include "qt_canvas_objCreate.hpp"
+#include "../../include/Qt_Part/qt_canvas.hpp"
+#include "../../include/Qt_Part/qt_canvas_preview.hpp"
+#include "../../include/Qt_Part/qt_canvas_objCreate.hpp"
 #include <QPainter>
 #include <QMouseEvent>
 
@@ -32,7 +32,7 @@ void Canvas::paintEvent(QPaintEvent* event){
     QPainter painter(this);
     //Here we will iterate through the list of shapes and call their draw method to render them on the canvas
     painter.setRenderHint(QPainter::Antialiasing); //inbuilt method to make the shapes look smoother
-    for(auto& render_shape: shapes){
+    for(auto& render_shape: lshapes){
         render_shape->draw(painter);//rendering all the shapes
     }
 
@@ -50,9 +50,9 @@ void Canvas::paintEvent(QPaintEvent* event){
     }
 }
 void Canvas::mousePressEvent(QMouseEvent* event){
-    if(event()->button() == Qt::LeftButton){
+    if(event->button() == Qt::LeftButton){
         mouse_pressed = true;
-        last_point = event()->pos();
+        last_point = event->pos();
     }
 }
 void Canvas::mouseMoveEvent(QMouseEvent* event){
@@ -61,11 +61,11 @@ void Canvas::mouseMoveEvent(QMouseEvent* event){
     }
 }
 void Canvas::mouseReleaseEvent(QMouseEvent* event){
-    if(event()->button() == Qt::LeftButton){
+    if(event->button() == Qt::LeftButton){
         mouse_pressed = false;
         //need to add new shape object here
         if(current_tool >= 0 && current_tool <= 5){
-            objCreate(current_tool, last_point, event()->pos());
+            lshapes.push_back(objCreate(current_tool, last_point, event->pos(), tot_id));
         }
         else if(current_tool == 6){
             //freehand tool

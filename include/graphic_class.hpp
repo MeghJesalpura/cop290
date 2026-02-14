@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <memory>
+#include <QPainter>
 #include "point.hpp"
 
 namespace mainSpace{
@@ -23,7 +25,7 @@ class GraphicClass{
         
         void set_stroke_clr(std::string m_strokeClr);
         void set_stroke_wt(double m_strokeWt);
-        void set_fill_clr(std::string m_newClr);
+        void set_fill_clr(std::string m_newClr);    
         void set_width(double m_width);
         void set_height(double m_height);
         void set_position(double x, double y);//will take in x, y format only
@@ -35,8 +37,7 @@ class GraphicClass{
         double get_height();
 
         Point get_position();//stores central point for the shape: to be used for move and resize operations
-        virtual void move_shape() = 0;//to be done as per each shape's requirement
-        virtual void resize() = 0;//again to be done like move_shape
+        //move and resize will be shape specific
         virtual std::unique_ptr<GraphicClass> clone() const = 0;//not sure about the parameters this will require : will be used for copy paste undo redo I think  
         virtual std::string to_svg() = 0;
 

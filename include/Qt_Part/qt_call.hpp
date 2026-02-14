@@ -7,10 +7,10 @@
 class MainWindow : public QMainWindow{
     public:
         MainWindow();
-        void createToolBar();
-        void createMenus();
         void createActions();
         void connectActions();
+        void createToolBar();
+        void createMenus();
     
     private:
         QAction* rectangle;
@@ -36,6 +36,7 @@ class MainWindow : public QMainWindow{
         QAction* paste; 
         QAction* undo; 
         QAction* redo;
+        Canvas* canvas;
 };
 
 #endif

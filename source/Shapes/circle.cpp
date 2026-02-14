@@ -1,9 +1,13 @@
-#include "circle.hpp"
+#include "../../include/Shapes/circle.hpp"
 #include <string>
 #include <sstream>
 
 namespace mainSpace{
-    Circle::Circle(Point& center, double m_radius, int m_id) : GraphicClass(m_id), center_(center), radius_(m_radius) {}
+    Circle::Circle(double center_x, double center_y, double m_radius, int m_id) : GraphicClass(m_id){
+        center_.x = center_x;
+        center_.y = center_y;
+        radius_ = m_radius;
+    } 
     void Circle::move_shape(double x, double y){
         center_.x = x;
         center_.y = y;
@@ -17,10 +21,10 @@ namespace mainSpace{
     double Circle::get_radius(){
         return radius_;
     }
-    virtual std::unique_ptr<GraphicClass> Circle::clone() const{
+    std::unique_ptr<GraphicClass> Circle::clone() const{
         return std::make_unique<Circle>(*this);
     }
-    virtual std::string Circle::to_svg(){
+    std::string Circle::to_svg(){
         std::stringstream ss;
         ss << "<circle cx=\"" << center_.x 
         << "\" cy=\"" << center_.y 
@@ -30,7 +34,7 @@ namespace mainSpace{
         << "\" fill=\"" << fillClr_ << "\" />";
         return ss.str();
     }
-    virtual void Circle::draw(QPainter& painter){
+    void Circle::draw(QPainter& painter){
         QPen pen(QColor(QString::fromStdString(strokeClr_)), strokeWt_);
         painter.setPen(pen);
         painter.setBrush(QColor(QString::fromStdString(fillClr_)));

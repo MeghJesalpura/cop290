@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <vector>
 #include <memory>
-#include "../mainSpace/GraphicClass.hpp"
+#include "../graphic_class.hpp"
 class Canvas : public QWidget {
     Q_OBJECT //this is a macro that is included for functionality of signals and slots in Qt
     private:
@@ -16,7 +16,7 @@ class Canvas : public QWidget {
         int current_tool; //-1 for none, 0 for Rectangle, 1 for Rounded Rectangle, ... and so on as per the order in toolbar
         bool mouse_pressed;
         QPoint last_point; //to keep track of the last point for drawing and moving shapes
-        vector<std::unique_ptr<mainSpace::GraphicClass>> lshapes; //list of all the shapes on the canvas
+        std::vector<std::unique_ptr<mainSpace::GraphicClass>> lshapes; //list of all the shapes on the canvas
 
     public:
         Canvas(QWidget* parent = nullptr);

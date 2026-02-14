@@ -1,6 +1,7 @@
-#include "qt_canvas_objCreate.hpp"
+#include "../../include/Qt_Part/qt_canvas_objCreate.hpp"
+#include "../../include/Shapes/circle.hpp"
 
-std::unique_ptr<mainSpace::GraphicClass> objCreate(int tool, const QPoint& start_point, const QPoint& end_point){
+std::unique_ptr<mainSpace::GraphicClass> objCreate(int tool, const QPoint& start_point, const QPoint& end_point, int& tot_id){
     switch(tool){
         case 0:{
             //rectangle
@@ -13,7 +14,7 @@ std::unique_ptr<mainSpace::GraphicClass> objCreate(int tool, const QPoint& start
         case 2:{
             //circle
             double radius = qMax(qAbs(end_point.x() - start_point.x()), qAbs(end_point.y() - start_point.y())) / 2.0;//using inbuild fns
-            auto new_circle = std::make_unique<mainSpace::Circle>(start_point, radius, tot_id);
+            auto new_circle = std::make_unique<mainSpace::Circle>(start_point.x(), start_point.y(), radius, tot_id);
             tot_id++;
             return new_circle;
         }

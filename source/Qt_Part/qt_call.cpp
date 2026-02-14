@@ -1,4 +1,4 @@
-#include "qt_call.hpp"
+#include "../../include/Qt_Part/qt_call.hpp"
 #include <QAction> 
 #include <QMenu>
 #include <QMenuBar>
@@ -7,11 +7,11 @@
 MainWindow::MainWindow(){
     resize(1200, 900);
     setWindowTitle("SVG Editor");
+    Canvas* canvas = new Canvas(this);
     createActions();
+    connectActions();
     createToolBar();
     createMenus();
-    connectActions();
-    Canvas* canvas = new Canvas(this);
     setCentralWidget(canvas);
 }
 
@@ -72,14 +72,14 @@ void MainWindow::createActions(){
     redo = new QAction(tr("&Redo"), this);
 }
 
-void connectActions(){
-    connect(circle, &QAction::triggered, this, [this](){ set_current_tool(2); });
-    connect(rectangle, &QAction::triggered, this, [this](){ set_current_tool(0); });
-    connect(roundedRectangle, &QAction::triggered, this, [this](){ set_current_tool(1); });
-    connect(line, &QAction::triggered, this, [this](){ set_current_tool(3); });
-    connect(hexagon, &QAction::triggered, this, [this](){ set_current_tool(4); });
-    connect(freehand, &QAction::triggered, this, [this](){ set_current_tool(5); });
-    connect(text, &QAction::triggered, this, [this](){ set_current_tool(6); });
+void MainWindow::connectActions(){
+    connect(circle, &QAction::triggered, this, [this](){ canvas -> set_current_tool(2); });
+    connect(rectangle, &QAction::triggered, this, [this](){ canvas -> set_current_tool(0); });
+    connect(roundedRectangle, &QAction::triggered, this, [this](){ canvas -> set_current_tool(1); });
+    connect(line, &QAction::triggered, this, [this](){ canvas -> set_current_tool(3); });
+    connect(hexagon, &QAction::triggered, this, [this](){ canvas -> set_current_tool(4); });
+    connect(freehand, &QAction::triggered, this, [this](){ canvas -> set_current_tool(5); });
+    connect(text, &QAction::triggered, this, [this](){ canvas -> set_current_tool(6); });
     //Text, fill colour and other options won't be clickable but rather would show the palletes - to implement later
     //need to connect file menu actions to their respective slots for functionality
 }
