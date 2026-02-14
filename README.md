@@ -11,6 +11,7 @@
 - 
 
 ## OOP Back-end related:
+- mainSpace is the namespace used for writing all the OOP back-end related classes
 - graphic_class.hpp and graphic_class.cpp - contains the base class with all properties and functions to set and change features
 of the shape
 - circle.hpp and circle.cpp - 
