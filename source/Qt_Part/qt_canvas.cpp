@@ -41,16 +41,19 @@ void Canvas::paintEvent(QPaintEvent* event){
     //Here we will iterate through the list of shapes and call their draw method to render them on the canvas
     painter.setRenderHint(QPainter::Antialiasing); //inbuilt method to make the shapes look smoother
     for(auto& render_shape: lshapes){
-        if(render_shape -> get_id() != current_shape_id)
+        if(render_shape -> get_id() != current_shape_id || !mouse_pressed){//to avoid drawing the shape being currently drawn/moved in the list of shapes
             render_shape->draw(painter);//rendering all the shapes
+        }
+    }
+    if(current_shape_id != -1 && selected_shape != nullptr){
+        QRectF bounds = selected_shape -> getBoundingBox();
+        painter.setPen(QPen(Qt::white, 1, Qt::DashLine));
+        painter.setBrush(Qt::NoBrush);
+        painter.drawRect(bounds);
     }
 
     if(mouse_pressed && (current_tool == 0 || current_tool == -1)){
         if(current_shape_id != -1 && selected_shape != nullptr){
-            QRectF bounds = selected_shape -> getBoundingBox();
-            painter.setPen(QPen(Qt::white, 1, Qt::DashLine));
-            painter.setBrush(Qt::NoBrush);
-            painter.drawRect(bounds);
             if(current_mode == 1){//resize mode
                 draw_preview(painter, selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
             }
@@ -111,7 +114,6 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event){
         //need to add new shape object here
         if(current_tool == 0 || current_tool == -1){
             if(current_shape_id != -1 && selected_shape != nullptr){
-                current_shape_id = -1;
                 if(current_mode == 0){//resize mode
                     obj_modify(selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
                 }
