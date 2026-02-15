@@ -3,7 +3,7 @@
 #include <sstream>
 
 namespace mainSpace{
-    Circle::Circle(double center_x, double center_y, double m_radius, int m_id) : GraphicClass(m_id){
+    Circle::Circle(double center_x, double center_y, double m_radius, int m_id) : GraphicClass(m_id, 3){
         center_.x = center_x;
         center_.y = center_y;
         radius_ = m_radius;
@@ -39,5 +39,25 @@ namespace mainSpace{
         painter.setPen(pen);
         painter.setBrush(QColor(QString::fromStdString(fillClr_)));
         painter.drawEllipse(QPointF(center_.x, center_.y), radius_, radius_);
+    }
+    bool Circle::contains_point(const QPoint& point){
+        double delx = point.x() - center_.x;
+        double dely = point.y() - center_.y;
+        double dist = sqrt(delx*delx + dely*dely);
+        return (dist <= (1.1*radius_ + strokeWt_/2));
+    }
+    int Circle::get_mode(const QPoint& point){
+        double delx = point.x() - center_.x;
+        double dely = point.y() - center_.y;
+        double dist = sqrt(delx*delx + dely*dely);
+        if(dist <= (1.1*radius_ + strokeWt_/2) && dist >= (0.9*radius_ - strokeWt_/2)){
+            return 1;//resize mode
+        }
+        else{
+            return 0;//move mode
+        }
+    }
+    Point Circle::get_center(){
+        return center_;
     }
 }

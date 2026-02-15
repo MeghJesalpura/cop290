@@ -21,6 +21,9 @@ namespace mainSpace{
             virtual std::unique_ptr<GraphicClass> clone() const override;
             virtual std::string to_svg() override;
             virtual void draw(QPainter& painter) override;
+            bool contains_point(const QPoint& point);
+            int get_mode(const QPoint& point);//to determine whether the point is in move region or resize region
+            Point get_center();
     };
 }
 

@@ -13,6 +13,7 @@ Canvas::Canvas(QWidget* parent) : QWidget(parent){
     state_bdr_clr = "#000000"; //default border color is black
     state_bdr_wt = 1.0; //default border width is 1.0
     current_tool = -1; //initially no tool is selected
+    current_mode = 0; //initially in move mode
     mouse_pressed = false;
     setMouseTracking(true); //to track mouse movements even when no button is pressed
 }
@@ -28,23 +29,37 @@ void Canvas::set_bdr_wt(double m_bdr_wt){
 void Canvas::set_current_tool(int m_tool){
     current_tool = m_tool;
 }
+void Canvas::set_current_shape_id(int m_shape_id){
+    current_shape_id = m_shape_id;
+}
 void Canvas::paintEvent(QPaintEvent* event){
     QPainter painter(this);
     //Here we will iterate through the list of shapes and call their draw method to render them on the canvas
     painter.setRenderHint(QPainter::Antialiasing); //inbuilt method to make the shapes look smoother
     for(auto& render_shape: lshapes){
-        render_shape->draw(painter);//rendering all the shapes
+        if(render_shape -> get_id() != current_shape_id)
+            render_shape->draw(painter);//rendering all the shapes
     }
 
-    if(mouse_pressed && current_tool != -1){
-        if(current_tool >= 0 && current_tool <= 5){
-            draw_preview(painter, current_tool, last_point, mapFromGlobal(QCursor::pos()));//mapFromGlobal is to shift coordinates relative to 
+    if(mouse_pressed && (current_tool == 0 || current_tool == -1)){
+        if(current_shape_id != -1 && selected_shape != nullptr){
+            if(current_mode == 0){//resize mode
+                draw_preview(painter, selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
+            }
+            else{//move mode
+                draw_preview(painter, selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
+            }
+        }
+    }
+    if(mouse_pressed && (current_tool >= 1 && current_tool <= 8)){
+        if(current_tool >= 1 && current_tool <= 6){
+            draw_preview(painter, current_tool, last_point, mapFromGlobal(QCursor::pos()), -1, nullptr);//mapFromGlobal is to shift coordinates relative to 
             //our widget instead of the entire screen
         }
-        else if(current_tool == 6){
+        else if(current_tool == 7){
             //freehand tool
         }
-        else if(current_tool == 7){
+        else if(current_tool == 8){
             //text tool
         }
     }
@@ -53,6 +68,22 @@ void Canvas::mousePressEvent(QMouseEvent* event){
     if(event->button() == Qt::LeftButton){
         mouse_pressed = true;
         last_point = event->pos();
+        if(current_tool == 0 || current_tool == -1){
+            selected_shape = nullptr;
+            //right now going in reverse order - but later will implement Z axis based implementation to select topmost shape
+            bool flag_got = false;
+            for(auto it = lshapes.rbegin(); it != lshapes.rend(); it++){
+                if(it -> contains_point(event -> pos())){
+                    flag_got = true;
+                    current_mode = it -> get_mode(event -> pos());
+                    current_shape_id = it -> get_id();
+                    selected_shape = it -> get();//storing a raw pointer to the selected shape
+                }
+            }
+            if(flag_got == false){
+                current_shape_id = -1;
+            }
+        }
     }
 }
 void Canvas::mouseMoveEvent(QMouseEvent* event){
@@ -64,13 +95,16 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event){
     if(event->button() == Qt::LeftButton){
         mouse_pressed = false;
         //need to add new shape object here
-        if(current_tool >= 0 && current_tool <= 5){
+        if(current_tool == 0 || current_tool == -1){
+            
+        }
+        else if(current_tool >= 1 && current_tool <= 6){
             lshapes.push_back(objCreate(current_tool, last_point, event->pos(), tot_id));
         }
-        else if(current_tool == 6){
+        else if(current_tool == 7){
             //freehand tool
         }
-        else if(current_tool == 7){
+        else if(current_tool == 8){
             //text tool
         }
         update();

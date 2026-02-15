@@ -15,12 +15,14 @@ class GraphicClass{
         std::string strokeClr_;
         double strokeWt_;
         std::string fillClr_;
+        //this is for the bounding box
         Point position_;
         double width_;
         double height_;
+        int tool_;
 
     public:
-        GraphicClass(int m_id);
+        GraphicClass(int m_id, int m_tool);
         virtual ~GraphicClass() = default;
         
         void set_stroke_clr(std::string m_strokeClr);
@@ -29,7 +31,7 @@ class GraphicClass{
         void set_width(double m_width);
         void set_height(double m_height);
         void set_position(double x, double y);//will take in x, y format only
-
+        int get_tool();
         std::string get_stroke_clr();
         double get_stroke_wt();
         std::string get_fill_clr();
@@ -42,6 +44,7 @@ class GraphicClass{
         virtual std::string to_svg() = 0;
 
         virtual void draw(QPainter& painter) = 0;
+        int get_id();
 };
 }
 

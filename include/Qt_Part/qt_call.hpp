@@ -3,7 +3,11 @@
 
 #include <QMainWindow>
 #include "qt_canvas.hpp"
-/* CHECK : need to check whether this access specifier has to be public or private */
+#include <QAction>
+#include <QActionGroup>
+#include <QMenu>
+#include <QToolBar>
+/*CHECK : need to check whether this access specifier has to be public or private */
 class MainWindow : public QMainWindow{
     public:
         MainWindow();
@@ -20,6 +24,7 @@ class MainWindow : public QMainWindow{
         QAction* hexagon;
         QAction* freehand;
         QAction* text;
+        QAction* select;
         QAction* colorFill;
         QAction* colorBdr;
         QAction* widthBdr;
@@ -37,6 +42,7 @@ class MainWindow : public QMainWindow{
         QAction* undo; 
         QAction* redo;
         Canvas* canvas;
+        QActionGroup* toolActionGroup; //to ensure that only one tool is selected at a time
 };
 
 #endif

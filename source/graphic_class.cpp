@@ -1,7 +1,7 @@
 #include "graphic_class.hpp"
 
 namespace mainSpace{
-    GraphicClass::GraphicClass(int m_id){
+    GraphicClass::GraphicClass(int m_id, int m_tool){
         id_ = m_id;
         width_ = 0;
         height_ = 0;
@@ -9,6 +9,7 @@ namespace mainSpace{
         strokeClr_ = "black";
         strokeWt_ = 1;
         fillClr_ = "white";
+        tool_ = m_tool;
     }
 
     void GraphicClass::set_stroke_clr(std::string m_strokeClr){
@@ -30,6 +31,9 @@ namespace mainSpace{
         position_ = {x,y};
     }
 
+    int GraphicClass::get_tool(){
+        return tool_;
+    }
     std::string GraphicClass::get_stroke_clr(){
         return strokeClr_;
     }
@@ -47,5 +51,8 @@ namespace mainSpace{
     }
     Point GraphicClass::get_position(){
         return position_;
+    }
+    int GraphicClass::get_id(){
+        return id_;
     }
 }
