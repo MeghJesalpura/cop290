@@ -14,6 +14,9 @@
 ## Qt + OOP:
 - In canvas class, I store the state variables. If current_tool is 0 or -1, then we have another mode for move or resize.
 
+## DocManager:
+- This set of filles will store the pointers and will be used to do three things: 1) Undo/Redo 2) Cut/Copy/Paste 3) Save/Open files
+
 ## OOP Back-end related:
 - mainSpace is the namespace used for writing all the OOP back-end related classes
 - graphic_class.hpp and graphic_class.cpp - contains the base class with all properties and functions to set and change features
