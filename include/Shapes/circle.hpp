@@ -17,6 +17,7 @@ namespace mainSpace{
             void resize(double new_radius);
 
             void set_radius(double m_radius);
+            void set_center(double x, double y);
             double get_radius() const;
             virtual std::unique_ptr<GraphicClass> clone() const override;
             virtual std::string to_svg() override;

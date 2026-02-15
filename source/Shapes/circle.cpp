@@ -54,4 +54,8 @@ namespace mainSpace{
     Point Circle::get_center() const{
         return center_;
     }
+    void Circle::set_center(double x, double y){
+        center_.x = x;
+        center_.y = y;
+    }
 }

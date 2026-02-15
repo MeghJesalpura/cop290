@@ -1,6 +1,7 @@
 #include "../../include/Qt_Part/qt_canvas.hpp"
 #include "../../include/Qt_Part/qt_canvas_preview.hpp"
 #include "../../include/Qt_Part/qt_canvas_objCreate.hpp"
+#include "../../include/Qt_Part/qt_canvas_objModify.hpp"
 #include <QPainter>
 #include <QMouseEvent>
 #include "../../include/Shapes/circle.hpp"
@@ -49,7 +50,7 @@ void Canvas::paintEvent(QPaintEvent* event){
             painter.setPen(QPen(Qt::DashLine));
             painter.setBrush(Qt::NoBrush);
             painter.drawRect(bounds);
-            if(current_mode == 0){//resize mode
+            if(current_mode == 1){//resize mode
                 draw_preview(painter, selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
             }
             else{//move mode
@@ -110,10 +111,10 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event){
         if(current_tool == 0 || current_tool == -1){
             if(current_shape_id != -1 && selected_shape != nullptr){
                 if(current_mode == 0){//resize mode
-                    //draw_preview(painter, selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
+                    obj_modify(selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
                 }
                 else{//move mode
-                    //draw_preview(painter, selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
+                    obj_modify(selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
                 }
             }
         }
