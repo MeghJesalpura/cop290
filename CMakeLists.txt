@@ -20,6 +20,7 @@ set(PROJECT_SOURCES
     ./source/Qt_Part/qt_canvas.cpp
     ./source/Qt_Part/qt_canvas_preview.cpp
     ./source/Qt_Part/qt_canvas_objCreate.cpp
+    ./source/Qt_Part/qt_dialog.cpp
     ./source/graphic_class.cpp
     ./source/Shapes/circle.cpp
 )

@@ -4,5 +4,6 @@
 #include <QPainter>
 #include <QPoint>
 #include "../point.hpp"
-void draw_preview(QPainter& painter, int tool, const QPoint& start_point, const QPoint& current_point, int mode = -1, const GraphicClass* selected_shape = nullptr);//mode is only required for select tool to determine whether we are in move mode or resize mode
+#include "../graphic_class.hpp"
+void draw_preview(QPainter& painter, int tool, const QPoint& start_point, const QPoint& current_point, int mode = -1, mainSpace::GraphicClass* selected_shape = nullptr);//mode is only required for select tool to determine whether we are in move mode or resize mode
 #endif

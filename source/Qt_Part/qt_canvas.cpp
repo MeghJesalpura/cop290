@@ -3,6 +3,8 @@
 #include "../../include/Qt_Part/qt_canvas_objCreate.hpp"
 #include <QPainter>
 #include <QMouseEvent>
+#include "../../include/Shapes/circle.hpp"
+#include "../../include/graphic_class.hpp"
 
 Canvas::Canvas(QWidget* parent) : QWidget(parent){
     //need to call the base constructor of QWidget
@@ -43,6 +45,10 @@ void Canvas::paintEvent(QPaintEvent* event){
 
     if(mouse_pressed && (current_tool == 0 || current_tool == -1)){
         if(current_shape_id != -1 && selected_shape != nullptr){
+            QRectF bounds = selected_shape -> getBoundingBox();
+            painter.setPen(QPen(Qt::DashLine));
+            painter.setBrush(Qt::NoBrush);
+            painter.drawRect(bounds);
             if(current_mode == 0){//resize mode
                 draw_preview(painter, selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
             }
@@ -53,6 +59,8 @@ void Canvas::paintEvent(QPaintEvent* event){
     }
     if(mouse_pressed && (current_tool >= 1 && current_tool <= 8)){
         if(current_tool >= 1 && current_tool <= 6){
+            painter.setPen(QPen(QColor(QString::fromStdString(state_bdr_clr)), state_bdr_wt));
+            painter.setBrush(QColor(QString::fromStdString(state_fill_clr)));
             draw_preview(painter, current_tool, last_point, mapFromGlobal(QCursor::pos()), -1, nullptr);//mapFromGlobal is to shift coordinates relative to 
             //our widget instead of the entire screen
         }
@@ -73,11 +81,15 @@ void Canvas::mousePressEvent(QMouseEvent* event){
             //right now going in reverse order - but later will implement Z axis based implementation to select topmost shape
             bool flag_got = false;
             for(auto it = lshapes.rbegin(); it != lshapes.rend(); it++){
-                if(it -> contains_point(event -> pos())){
+                if((*it) -> contains_point(event -> pos())){//contains_point is a method in the GraphicClass
                     flag_got = true;
-                    current_mode = it -> get_mode(event -> pos());
-                    current_shape_id = it -> get_id();
-                    selected_shape = it -> get();//storing a raw pointer to the selected shape
+                    mainSpace::GraphicClass* temp_ptr = it -> get();
+                    if(auto* circle_ = dynamic_cast<mainSpace::Circle*>(temp_ptr)){
+                        current_mode = circle_ -> get_mode(event -> pos());
+                    }
+                    current_shape_id = (*it) -> get_id();
+                    selected_shape = temp_ptr;//storing a raw pointer to the selected shape
+                    break;
                 }
             }
             if(flag_got == false){
@@ -96,10 +108,17 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event){
         mouse_pressed = false;
         //need to add new shape object here
         if(current_tool == 0 || current_tool == -1){
-            
+            if(current_shape_id != -1 && selected_shape != nullptr){
+                if(current_mode == 0){//resize mode
+                    //draw_preview(painter, selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
+                }
+                else{//move mode
+                    //draw_preview(painter, selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
+                }
+            }
         }
         else if(current_tool >= 1 && current_tool <= 6){
-            lshapes.push_back(objCreate(current_tool, last_point, event->pos(), tot_id));
+            lshapes.push_back(objCreate(current_tool, last_point, event->pos(), tot_id, state_fill_clr, state_bdr_clr, state_bdr_wt));
         }
         else if(current_tool == 7){
             //freehand tool

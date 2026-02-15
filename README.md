@@ -9,7 +9,7 @@
 
 ## Qt interactions:
 - The functions paintEvent(), mouseReleaseEvent(), etc are called by Qt whenever such events happen on the Canvas widget.
-- 
+- qt_dialog.cpp - just for the dialogues and maintain modularity of code
 
 ## Qt + OOP:
 - In canvas class, I store the state variables. If current_tool is 0 or -1, then we have another mode for move or resize.

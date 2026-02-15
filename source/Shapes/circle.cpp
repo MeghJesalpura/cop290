@@ -1,9 +1,9 @@
 #include "../../include/Shapes/circle.hpp"
 #include <string>
 #include <sstream>
-
+#include <cmath>
 namespace mainSpace{
-    Circle::Circle(double center_x, double center_y, double m_radius, int m_id) : GraphicClass(m_id, 3){
+    Circle::Circle(double center_x, double center_y, double m_radius, int m_id) : GraphicClass(m_id, 3, center_x - m_radius, center_y - m_radius, 2.1*m_radius, 2.1*m_radius){
         center_.x = center_x;
         center_.y = center_y;
         radius_ = m_radius;
@@ -18,7 +18,7 @@ namespace mainSpace{
     void Circle::set_radius(double m_radius){
         radius_ = m_radius;
     }
-    double Circle::get_radius(){
+    double Circle::get_radius() const{
         return radius_;
     }
     std::unique_ptr<GraphicClass> Circle::clone() const{
@@ -40,13 +40,7 @@ namespace mainSpace{
         painter.setBrush(QColor(QString::fromStdString(fillClr_)));
         painter.drawEllipse(QPointF(center_.x, center_.y), radius_, radius_);
     }
-    bool Circle::contains_point(const QPoint& point){
-        double delx = point.x() - center_.x;
-        double dely = point.y() - center_.y;
-        double dist = sqrt(delx*delx + dely*dely);
-        return (dist <= (1.1*radius_ + strokeWt_/2));
-    }
-    int Circle::get_mode(const QPoint& point){
+    int Circle::get_mode(const QPoint& point) const{
         double delx = point.x() - center_.x;
         double dely = point.y() - center_.y;
         double dist = sqrt(delx*delx + dely*dely);
@@ -57,7 +51,7 @@ namespace mainSpace{
             return 0;//move mode
         }
     }
-    Point Circle::get_center(){
+    Point Circle::get_center() const{
         return center_;
     }
 }

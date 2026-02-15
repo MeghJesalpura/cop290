@@ -8,6 +8,7 @@
 #include <QMenu>
 #include <QToolBar>
 /*CHECK : need to check whether this access specifier has to be public or private */
+
 class MainWindow : public QMainWindow{
     public:
         MainWindow();
@@ -43,6 +44,13 @@ class MainWindow : public QMainWindow{
         QAction* redo;
         Canvas* canvas;
         QActionGroup* toolActionGroup; //to ensure that only one tool is selected at a time
+};
+
+class DialogHelpers{
+    public: 
+        static void show_brdr_clr_dialog(MainWindow* main_window, Canvas* canvas, QAction* colorBdr);
+        static void show_fill_clr_dialog(MainWindow* main_window, Canvas* canvas, QAction* colorFill);
+        static void show_brdr_wt_dialog(MainWindow* main_window, Canvas* canvas);
 };
 
 #endif

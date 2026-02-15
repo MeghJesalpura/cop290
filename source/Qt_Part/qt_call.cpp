@@ -14,6 +14,7 @@ MainWindow::MainWindow(){
 
 void MainWindow::createToolBar(){
     fileToolBar = new QToolBar(tr("File"));
+    fileToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     addToolBar(Qt::LeftToolBarArea, fileToolBar);
     fileToolBar -> addAction(select);
     fileToolBar -> addAction(rectangle);
@@ -98,6 +99,8 @@ void MainWindow::connectActions(){
     connect(freehand, &QAction::triggered, this, [this](){ canvas -> set_current_tool(6); canvas -> set_current_shape_id(-1);});
     connect(text, &QAction::triggered, this, [this](){ canvas -> set_current_tool(7); canvas -> set_current_shape_id(-1);});
     connect(select, &QAction::triggered, this, [this](){ canvas -> set_current_tool(0); canvas -> set_current_shape_id(-1);});
-    //Text, fill colour and other options won't be clickable but rather would show the palletes - to implement later
+    connect(colorBdr, &QAction::triggered, this, [this](){ DialogHelpers::show_brdr_clr_dialog(this, canvas, colorBdr);});
+    connect(colorFill, &QAction::triggered, this, [this](){ DialogHelpers::show_fill_clr_dialog(this, canvas, colorFill);});
+    connect(widthBdr, &QAction::triggered, this, [this](){ DialogHelpers::show_brdr_wt_dialog(this, canvas);});
     //need to connect file menu actions to their respective slots for functionality
 }
