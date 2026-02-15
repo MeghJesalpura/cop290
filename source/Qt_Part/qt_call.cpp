@@ -7,7 +7,7 @@
 MainWindow::MainWindow(){
     resize(1200, 900);
     setWindowTitle("SVG Editor");
-    Canvas* canvas = new Canvas(this);
+    canvas = new Canvas(this);
     createActions();
     connectActions();
     createToolBar();
