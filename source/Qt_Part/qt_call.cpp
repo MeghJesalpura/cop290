@@ -67,7 +67,7 @@ void MainWindow::createActions(){
     colorBdr = new QAction(tr("Border Color"), this);
     widthBdr = new QAction(tr("Border Width"), this);
 
-    toolActionGroup = new QActionGroup(this);
+    toolActionGroup = new QActionGroup(this);//to ensure that only one of the tool actions can be checked at a time
     toolActionGroup -> addAction(select);
     toolActionGroup -> addAction(rectangle);
     toolActionGroup -> addAction(roundedRectangle);

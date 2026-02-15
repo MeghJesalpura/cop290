@@ -20,6 +20,7 @@ std::unique_ptr<mainSpace::GraphicClass> objCreate(int tool, const QPoint& start
             new_circle -> set_stroke_wt(bdr_wt);
             tot_id++;
             return new_circle;
+            break;
         }
         case 4:{
             //line

@@ -16,14 +16,17 @@ void obj_modify(int tool, const QPoint& start_point, const QPoint& current_point
                     QPointF shift = current_point - start_point;
                     mainSpace::Point center_og = circle_ -> get_center();
                     circle_ -> set_center(center_og.x + shift.x(), center_og.y + shift.y());
+                    circle_ -> set_position(circle_ -> get_center().x - circle_ -> get_radius(), circle_ -> get_center().y - circle_ -> get_radius());
                 }
             }
             else{//resize mode
                 if(auto* circle_ = dynamic_cast<mainSpace::Circle*>(selected_shape)){
-                    QPointF shift = current_point - start_point;
-                    float radius_og = circle_ -> get_radius();
-                    float radius_new = radius_og + qMax(shift.x(), shift.y());//modelled as in inkscape
+                    QPointF shift = current_point - QPointF(circle_ -> get_center().x, circle_ -> get_center().y);
+                    float radius_new = qMax(qAbs(shift.x()), qAbs(shift.y()));//modelled as in inkscape
                     circle_ -> set_radius(radius_new);
+                    circle_ -> set_position(circle_ -> get_center().x - circle_ -> get_radius(), circle_ -> get_center().y - circle_ -> get_radius());
+                    circle_ -> set_width(2*circle_ -> get_radius());
+                    circle_ -> set_height(2*circle_ -> get_radius());
                 }
             }
             break;

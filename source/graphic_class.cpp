@@ -31,7 +31,7 @@ namespace mainSpace{
         position_ = {x,y};
     }
     bool GraphicClass::contains_point(const QPoint& point) const{
-        if(point.x() >= position_.x && point.x() <= position_.x + width_ && point.y() <= position_.y && point.y() >= position_.y - height_){
+        if(point.x() >= position_.x && point.x() <= position_.x + width_ && point.y() >= position_.y && point.y() <= position_.y + height_){
             return true;
         }
         return false;
@@ -62,6 +62,6 @@ namespace mainSpace{
         return id_;
     }
     QRectF GraphicClass::getBoundingBox() const{
-        return QRectF(position_.x, position_.y, position_.x + width_, position_.y - height_);
+        return QRectF(position_.x, position_.y, width_, height_);
     }
 }

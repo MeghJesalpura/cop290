@@ -3,7 +3,7 @@
 #include <sstream>
 #include <cmath>
 namespace mainSpace{
-    Circle::Circle(double center_x, double center_y, double m_radius, int m_id) : GraphicClass(m_id, 3, center_x - m_radius, center_y - m_radius, 2.1*m_radius, 2.1*m_radius){
+    Circle::Circle(double center_x, double center_y, double m_radius, int m_id) : GraphicClass(m_id, 3, center_x - m_radius, center_y - m_radius, 2.0*m_radius, 2.0*m_radius){
         center_.x = center_x;
         center_.y = center_y;
         radius_ = m_radius;

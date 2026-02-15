@@ -4,6 +4,9 @@
 void draw_preview(QPainter& painter, int tool, const QPoint& start_point, const QPoint& current_point, int mode, mainSpace::GraphicClass* selected_shape){
     QPen pen(Qt::DashLine);//just to ensure that preview looks different from final shape
     painter.setPen(pen);
+    if(selected_shape != nullptr){
+        painter.setBrush(QColor(QString::fromStdString(selected_shape -> get_fill_clr())));
+    }
     switch(tool){
         case 1: {//Rectangle
             painter.drawRect(QRect(start_point, current_point));
@@ -30,9 +33,8 @@ void draw_preview(QPainter& painter, int tool, const QPoint& start_point, const 
             }
             else{//resize mode
                 if(auto* circle_ = dynamic_cast<const mainSpace::Circle*>(selected_shape)){
-                    QPointF shift = current_point - start_point;
-                    float radius_og = circle_ -> get_radius();
-                    float radius_new = radius_og + qMax(shift.x(), shift.y());//modelled as in inkscape
+                    QPointF shift = current_point - QPointF(circle_ -> get_center().x, circle_ -> get_center().y);
+                    float radius_new = qMax(qAbs(shift.x()), qAbs(shift.y()));//modelled as in inkscape
                     painter.drawEllipse(QPointF(circle_ -> get_center().x, circle_ -> get_center().y), radius_new, radius_new);
                 }
             }
