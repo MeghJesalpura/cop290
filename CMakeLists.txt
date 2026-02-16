@@ -24,6 +24,9 @@ set(PROJECT_SOURCES
     ./source/graphic_class.cpp
     ./source/Shapes/circle.cpp
     ./source/Qt_Part/qt_canvas_objModify.cpp
+    ./source/DocManager/doc_manager.cpp
+    ./source/DocManager/vec_manager.cpp
+    ./source/DocManager/action_manager.cpp
 )
 
 set(PROJECT_HEADERS
@@ -34,7 +37,10 @@ set(PROJECT_HEADERS
     ./include/graphic_class.hpp
     ./include/Shapes/circle.hpp
     ./include/point.hpp
-    ./include/Qt_Part/qt_canvas_objModify.hpp)
+    ./include/Qt_Part/qt_canvas_objModify.hpp
+    ./include/DocManager/doc_manager.hpp
+    ./include/DocManager/vec_manager.hpp
+    ./include/DocManager/action_manager.hpp)
 
 add_executable(SVGEditor
     ${PROJECT_SOURCES}

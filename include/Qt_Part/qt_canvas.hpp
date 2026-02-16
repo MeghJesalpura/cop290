@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 #include "../graphic_class.hpp"
+#include "../DocManager/doc_manager.hpp"
 class Canvas : public QWidget {
     Q_OBJECT //this is a macro that is included for functionality of signals and slots in Qt
     private:
@@ -17,7 +18,7 @@ class Canvas : public QWidget {
         int current_mode; // 0 for move, 1 for resize - only used when current_tool is -1 or 0 i.e. select tool is active
         bool mouse_pressed;
         QPoint last_point; //to keep track of the last point for drawing and moving shapes
-        std::vector<std::unique_ptr<mainSpace::GraphicClass>> lshapes; //list of all the shapes on the canvas
+        std::unique_ptr<DocManager> doc_manager; //to manage the shapes and their states for undo/redo and cut/copy/paste functionalities
         mainSpace::GraphicClass* selected_shape;
 
     public:

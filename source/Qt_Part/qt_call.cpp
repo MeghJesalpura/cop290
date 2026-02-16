@@ -11,7 +11,6 @@ MainWindow::MainWindow(){
     createMenus();
     setCentralWidget(canvas);
 }
-
 void MainWindow::createToolBar(){
     fileToolBar = new QToolBar(tr("File"));
     fileToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -28,7 +27,6 @@ void MainWindow::createToolBar(){
     fileToolBar -> addAction(colorBdr);
     fileToolBar -> addAction(widthBdr);
 }
-
 void MainWindow::createMenus(){
     fileMenu = menuBar()->addMenu(tr("&File"));
     fileMenu -> addAction(newFile);
@@ -45,7 +43,6 @@ void MainWindow::createMenus(){
     fileMenu2 -> addAction(undo);
     fileMenu2 -> addAction(redo);
 }
-
 void MainWindow::createActions(){
     select = new QAction(tr("&Select"), this);
     select -> setCheckable(true);
@@ -78,18 +75,25 @@ void MainWindow::createActions(){
     toolActionGroup -> addAction(text);
 
     newFile = new QAction(tr("&New File"), this);
+    newFile -> setShortcut(QKeySequence::New);
     openFile = new QAction(tr("&Open File"), this);
+    openFile -> setShortcut(QKeySequence::Open);
     saveFile = new QAction(tr("&Save File"), this);
+    saveFile -> setShortcut(QKeySequence::Save);
     saveAsFile = new QAction(tr("Save &As File"), this);
     exitApp = new QAction(tr("E&xit Application"), this);
 
     cut = new QAction(tr("Cu&t"), this);
+    cut -> setShortcut(QKeySequence::Cut);
     copy = new QAction(tr("&Copy"), this);
+    copy -> setShortcut(QKeySequence::Copy);
     paste = new QAction(tr("&Paste"), this);
+    paste -> setShortcut(QKeySequence::Paste);
     undo = new QAction(tr("&Undo"), this);
+    undo -> setShortcut(QKeySequence::Undo);
     redo = new QAction(tr("&Redo"), this);
+    redo -> setShortcut(QKeySequence::Redo);
 }
-
 void MainWindow::connectActions(){
     connect(circle, &QAction::triggered, this, [this](){ canvas -> set_current_tool(3); canvas -> set_current_shape_id(-1);});
     connect(rectangle, &QAction::triggered, this, [this](){ canvas -> set_current_tool(1); canvas -> set_current_shape_id(-1);});

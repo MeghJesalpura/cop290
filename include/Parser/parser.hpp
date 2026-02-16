@@ -11,7 +11,7 @@ class SVGParser{
         std::string extract_substring(size_t start, size_t end);
     public:
         SVGParser(const std::string& m_svg_content);
-        std::vector<GraphicsObject> parse(const std::string& svg_content);
+        std::vector<GraphicsObject> parse();
 };
 
 #endif

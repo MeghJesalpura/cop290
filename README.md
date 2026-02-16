@@ -7,6 +7,10 @@
 
 ### File dependencies and structures:
 
+## Parser:
+- Note that I am parsing the tags showing inkscape and g layers and stuff but I am not using that information. Canvas size is also predecided.
+- The parsing that we are implementing is just for getting the shapes, corresponding attributes and storing them.
+
 ## Qt interactions:
 - The functions paintEvent(), mouseReleaseEvent(), etc are called by Qt whenever such events happen on the Canvas widget.
 - qt_dialog.cpp - just for the dialogues and maintain modularity of code

@@ -6,8 +6,6 @@
 #include <QMouseEvent>
 #include "../../include/Shapes/circle.hpp"
 #include "../../include/graphic_class.hpp"
-
-
 Canvas::Canvas(QWidget* parent) : QWidget(parent){
     //need to call the base constructor of QWidget
     //setAttribute(Qt::WA_StaticContents);
@@ -20,6 +18,7 @@ Canvas::Canvas(QWidget* parent) : QWidget(parent){
     current_mode = 0; //initially in move mode
     mouse_pressed = false;
     setMouseTracking(true); //to track mouse movements even when no button is pressed
+    doc_manager = std::make_unique<DocManager>(); //initializing the doc_manager
 }
 void Canvas::set_fill_clr(std::string m_fill_clr){
     state_fill_clr = m_fill_clr;
@@ -40,7 +39,7 @@ void Canvas::paintEvent(QPaintEvent* event){
     QPainter painter(this);
     //Here we will iterate through the list of shapes and call their draw method to render them on the canvas
     painter.setRenderHint(QPainter::Antialiasing); //inbuilt method to make the shapes look smoother
-    for(auto& render_shape: lshapes){
+    for(auto& render_shape: doc_manager -> get_all_shapes()){
         if(render_shape -> get_id() != current_shape_id || !mouse_pressed){//to avoid drawing the shape being currently drawn/moved in the list of shapes
             render_shape->draw(painter);//rendering all the shapes
         }
@@ -51,7 +50,6 @@ void Canvas::paintEvent(QPaintEvent* event){
         painter.setBrush(Qt::NoBrush);
         painter.drawRect(bounds);
     }
-
     if(mouse_pressed && (current_tool == 0 || current_tool == -1)){
         if(current_shape_id != -1 && selected_shape != nullptr){
             if(current_mode == 1){//resize mode
@@ -85,6 +83,7 @@ void Canvas::mousePressEvent(QMouseEvent* event){
             selected_shape = nullptr;
             //right now going in reverse order - but later will implement Z axis based implementation to select topmost shape
             bool flag_got = false;
+            auto& lshapes = doc_manager -> get_all_shapes_mutable();
             for(auto it = lshapes.rbegin(); it != lshapes.rend(); it++){
                 if((*it) -> contains_point(event -> pos())){//contains_point is a method in the GraphicClass
                     flag_got = true;
@@ -123,7 +122,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event){
             }
         }
         else if(current_tool >= 1 && current_tool <= 6){
-            lshapes.push_back(objCreate(current_tool, last_point, event->pos(), tot_id, state_fill_clr, state_bdr_clr, state_bdr_wt));
+            doc_manager -> add_shape(objCreate(current_tool, last_point, event->pos(), tot_id, state_fill_clr, state_bdr_clr, state_bdr_wt));
         }
         else if(current_tool == 7){
             //freehand tool
