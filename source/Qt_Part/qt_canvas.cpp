@@ -1,11 +1,5 @@
 #include "../../include/Qt_Part/qt_canvas.hpp"
-#include "../../include/Qt_Part/qt_canvas_preview.hpp"
-#include "../../include/Qt_Part/qt_canvas_objCreate.hpp"
-#include "../../include/Qt_Part/qt_canvas_objModify.hpp"
-#include <QPainter>
-#include <QMouseEvent>
-#include "../../include/Shapes/circle.hpp"
-#include "../../include/graphic_class.hpp"
+
 Canvas::Canvas(QWidget* parent) : QWidget(parent){
     //need to call the base constructor of QWidget
     //setAttribute(Qt::WA_StaticContents);
@@ -68,7 +62,7 @@ void Canvas::paintEvent(QPaintEvent* event){
     if(mouse_pressed && (current_tool == 0 || current_tool == -1)){
         if(doc_manager -> get_current_shape_id() != -1 && doc_manager -> get_selected_shape(doc_manager -> get_current_shape_id()) != nullptr){
             mainSpace::GraphicClass* selected_shape = doc_manager -> get_selected_shape(doc_manager -> get_current_shape_id());
-            if(current_mode == 1){//resize mode
+            if(current_mode != 0){//resize mode
                 draw_preview(painter, selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
             }
             else{//move mode
@@ -107,6 +101,12 @@ void Canvas::mousePressEvent(QMouseEvent* event){
                     if(auto* circle_ = dynamic_cast<mainSpace::Circle*>(temp_ptr)){
                         current_mode = circle_ -> get_mode(event -> pos());
                     }
+                    else if(auto* rect_ = dynamic_cast<mainSpace::Rectangle*>(temp_ptr)){
+                        current_mode = rect_ -> get_mode(event -> pos());
+                    }
+                    else if(auto* rrect_ = dynamic_cast<mainSpace::RoundedRectangle*>(temp_ptr)){
+                        current_mode = rrect_ -> get_mode(event -> pos());
+                    }
                     doc_manager -> set_current_shape_id((*it) -> get_id());
                     break;
                 }
@@ -128,13 +128,8 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event){
         //need to add new shape object here
         if(current_tool == 0 || current_tool == -1){
             if(doc_manager -> get_current_shape_id() != -1 && doc_manager -> get_selected_shape(doc_manager -> get_current_shape_id()) != nullptr){
-                mainSpace::GraphicClass* selected_shape = doc_manager -> get_selected_shape(doc_manager -> get_current_shape_id());
-                if(current_mode == 0){//resize mode
-                    obj_modify(selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
-                }
-                else{//move mode
-                    obj_modify(selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
-                }
+                mainSpace::GraphicClass* selected_shape = doc_manager -> get_selected_shape(doc_manager -> get_current_shape_id());    
+                obj_modify(selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
             }
         }
         else if(current_tool >= 1 && current_tool <= 6){

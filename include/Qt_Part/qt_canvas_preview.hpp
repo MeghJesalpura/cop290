@@ -5,5 +5,10 @@
 #include <QPoint>
 #include "../point.hpp"
 #include "../graphic_class.hpp"
+#include "../../include/Shapes/circle.hpp"
+#include "../../include/Shapes/rectangle.hpp"
+#include "../../include/Shapes/roundedRectangle.hpp"
+#include "../../include/Shapes/line.hpp"
+#include "../../include/Shapes/hexagon.hpp"
 void draw_preview(QPainter& painter, int tool, const QPoint& start_point, const QPoint& current_point, int mode = -1, mainSpace::GraphicClass* selected_shape = nullptr);//mode is only required for select tool to determine whether we are in move mode or resize mode
 #endif

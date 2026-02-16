@@ -1,15 +1,28 @@
 #include "../../include/Qt_Part/qt_canvas_objCreate.hpp"
 #include "../../include/Shapes/circle.hpp"
-
+#include "../../include/Shapes/rectangle.hpp"
+#include "../../include/Shapes/roundedRectangle.hpp"
+#include "../../include/Shapes/line.hpp"
+#include "../../include/Shapes/hexagon.hpp"
 std::unique_ptr<mainSpace::GraphicClass> objCreate(int tool, const QPoint& start_point, const QPoint& end_point, int tot_id, const std::string& fill_clr, const std::string& bdr_clr, double bdr_wt){
     switch(tool){
         case 1:{
-            //rectangle
-            break;
+            double width = std::abs(end_point.x() - start_point.x());
+            double height = std::abs(end_point.y() - start_point.y());
+            auto new_rect = std::make_unique<mainSpace::Rectangle>(start_point.x(), start_point.y(), width, height, tot_id);
+            new_rect -> set_fill_clr(fill_clr);
+            new_rect -> set_stroke_clr(bdr_clr);
+            new_rect -> set_stroke_wt(bdr_wt);
+            return new_rect;
         }
         case 2:{
-            //rounded rectangle
-            break;
+            double width = std::abs(end_point.x() - start_point.x());
+            double height = std::abs(end_point.y() - start_point.y());
+            auto new_rect = std::make_unique<mainSpace::RoundedRectangle>(start_point.x(), start_point.y(), width, height, tot_id);
+            new_rect -> set_fill_clr(fill_clr);
+            new_rect -> set_stroke_clr(bdr_clr);
+            new_rect -> set_stroke_wt(bdr_wt);
+            return new_rect;
         }
         case 3:{
             //circle

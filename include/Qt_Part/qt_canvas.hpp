@@ -1,6 +1,18 @@
 /* Need to decide the dependencies on what need to be imported */
 #ifndef qt_canvas_hpp 
 #define qt_canvas_hpp
+#include "Qt_Part/qt_canvas_preview.hpp"
+#include "qt_canvas_objCreate.hpp"
+#include "qt_canvas_objModify.hpp"
+#include <QPainter>
+#include <QMouseEvent>
+#include "../Shapes/circle.hpp"
+#include "../Shapes/rectangle.hpp"
+#include "../graphic_class.hpp"
+#include "../Shapes/roundedRectangle.hpp"
+#include "../Shapes/line.hpp"
+#include "../Shapes/hexagon.hpp"
+
 #include <QWidget>
 #include <vector>
 #include <memory>

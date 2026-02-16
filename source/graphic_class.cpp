@@ -31,7 +31,7 @@ namespace mainSpace{
         id_ = m_id;
     }
     bool GraphicClass::contains_point(const QPoint& point) const{
-        if(point.x() >= position_.x && point.x() <= position_.x + width_ && point.y() >= position_.y && point.y() <= position_.y + height_){
+        if(point.x() >= position_.x - 20 && point.x() <= position_.x + width_ + 20 && point.y() >= position_.y - 20 && point.y() <= position_.y + height_ + 20){
             return true;
         }
         return false;
