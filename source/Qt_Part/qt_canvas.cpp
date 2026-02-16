@@ -107,6 +107,9 @@ void Canvas::mousePressEvent(QMouseEvent* event){
                     else if(auto* rrect_ = dynamic_cast<mainSpace::RoundedRectangle*>(temp_ptr)){
                         current_mode = rrect_ -> get_mode(event -> pos());
                     }
+                    else if(auto* line_ = dynamic_cast<mainSpace::line*>(temp_ptr)){
+                        current_mode = line_ -> get_mode(event -> pos());
+                    }
                     doc_manager -> set_current_shape_id((*it) -> get_id());
                     break;
                 }

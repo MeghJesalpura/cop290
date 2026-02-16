@@ -49,7 +49,12 @@ namespace mainSpace{
     }
     int RoundedRectangle::get_mode(const QPoint& point) const{
         //if it is near one of the corners then it is in resize mode else move mode : modelled as in inkscape
-        if(point.x() >= position_.x - 20 && point.x() <= position_.x + 20 && point.y() >= position_.y - 20 && point.y() <= position_.y + 20){
+        double handle_x = position_.x + width_ - corner_radius_;
+        double handle_y = position_.y + corner_radius_;
+        if(point.x() >= handle_x - 15 && point.x() <= handle_x + 15 && point.y() >= handle_y - 15 && point.y() <= handle_y + 15){
+            return 5;
+        }
+        else if(point.x() >= position_.x - 20 && point.x() <= position_.x + 20 && point.y() >= position_.y - 20 && point.y() <= position_.y + 20){
             return 1;//resize mode - top left
         }
         else if(point.x() >= position_.x + width_ - 20 && point.x() <= position_.x + width_ + 20 && point.y() >= position_.y - 20 && point.y() <= position_.y + 20){
@@ -64,5 +69,11 @@ namespace mainSpace{
         else{
             return 0;//move mode
         }
+    }
+    void RoundedRectangle::set_corner_radius(double m_radius){
+        corner_radius_ = m_radius;
+    }
+    double RoundedRectangle::get_corner_radius() const{
+        return corner_radius_;
     }
 }

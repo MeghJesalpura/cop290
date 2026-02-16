@@ -36,6 +36,10 @@ std::unique_ptr<mainSpace::GraphicClass> objCreate(int tool, const QPoint& start
         }
         case 4:{
             //line
+            auto new_line = std::make_unique<mainSpace::line>(start_point.x(), start_point.y(), end_point.x(), end_point.y(), tot_id);
+            new_line -> set_stroke_clr(bdr_clr);
+            new_line -> set_stroke_wt(bdr_wt);
+            return new_line;
             break;
         }
         case 5:{

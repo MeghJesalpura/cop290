@@ -23,6 +23,8 @@ namespace mainSpace{
             void set_height(double m_height);
             double get_width() const;
             double get_height() const;
+            void set_corner_radius(double m_radius);
+            double get_corner_radius() const;
     };
 }
 

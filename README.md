@@ -15,6 +15,7 @@
 - The functions paintEvent(), mouseReleaseEvent(), etc are called by Qt whenever such events happen on the Canvas widget.
 - qt_dialog.cpp - just for the dialogues and maintain modularity of code
 - Note that in copy cut paste etc, the shape is pasted considering that the cursor is at the top left corner of the shape's bounding box.
+- Rounded rectangle - top right corner move for radius making
 
 ## Qt + OOP:
 - In canvas class, I store the state variables. If current_tool is 0 or -1, then we have another mode for move or resize.

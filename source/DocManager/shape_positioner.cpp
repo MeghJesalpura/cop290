@@ -18,5 +18,8 @@ void ShapePositioner::move_shape_to(mainSpace::GraphicClass* shape, double x, do
     else if(auto* rrect_ = dynamic_cast<mainSpace::RoundedRectangle*>(shape)){
         rrect_ -> move_shape(x, y);
     }
+    else if(auto* line_ = dynamic_cast<mainSpace::line*>(shape)){
+        line_ -> move_shape(x, y);
+    }
     //extend here
 }
