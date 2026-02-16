@@ -27,8 +27,8 @@ namespace mainSpace{
     void GraphicClass::set_height(double m_height){
         height_ = m_height;
     }
-    void GraphicClass::set_position(double x, double y){
-        position_ = {x,y};
+    void GraphicClass::set_id(int m_id){
+        id_ = m_id;
     }
     bool GraphicClass::contains_point(const QPoint& point) const{
         if(point.x() >= position_.x && point.x() <= position_.x + width_ && point.y() >= position_.y && point.y() <= position_.y + height_){
@@ -57,6 +57,9 @@ namespace mainSpace{
     }
     Point GraphicClass::get_position() const{
         return position_;
+    }
+    void GraphicClass::set_position(double x, double y){
+        position_ = {x,y};
     }
     int GraphicClass::get_id() const{
         return id_;

@@ -31,6 +31,7 @@ class GraphicClass{
         void set_width(double m_width);
         void set_height(double m_height);
         void set_position(double x, double y);//will take in x, y format only
+        void set_id(int m_id);
         int get_tool() const;
         std::string get_stroke_clr() const;
         double get_stroke_wt() const;

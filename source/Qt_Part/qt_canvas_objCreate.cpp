@@ -1,7 +1,7 @@
 #include "../../include/Qt_Part/qt_canvas_objCreate.hpp"
 #include "../../include/Shapes/circle.hpp"
 
-std::unique_ptr<mainSpace::GraphicClass> objCreate(int tool, const QPoint& start_point, const QPoint& end_point, int& tot_id, const std::string& fill_clr, const std::string& bdr_clr, double bdr_wt){
+std::unique_ptr<mainSpace::GraphicClass> objCreate(int tool, const QPoint& start_point, const QPoint& end_point, int tot_id, const std::string& fill_clr, const std::string& bdr_clr, double bdr_wt){
     switch(tool){
         case 1:{
             //rectangle
@@ -18,7 +18,6 @@ std::unique_ptr<mainSpace::GraphicClass> objCreate(int tool, const QPoint& start
             new_circle -> set_fill_clr(fill_clr);
             new_circle -> set_stroke_clr(bdr_clr);
             new_circle -> set_stroke_wt(bdr_wt);
-            tot_id++;
             return new_circle;
             break;
         }

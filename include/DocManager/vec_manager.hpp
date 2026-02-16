@@ -15,5 +15,6 @@ class VecManager{
         std::vector<std::unique_ptr<mainSpace::GraphicClass>> clone_shapes() const;
         void clear_shapes();
         void restore_shapes(std::vector<std::unique_ptr<mainSpace::GraphicClass>>& shapes);
+        int get_new_id();
 };
 #endif

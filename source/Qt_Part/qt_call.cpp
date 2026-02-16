@@ -106,5 +106,7 @@ void MainWindow::connectActions(){
     connect(colorBdr, &QAction::triggered, this, [this](){ DialogHelpers::show_brdr_clr_dialog(this, canvas, colorBdr);});
     connect(colorFill, &QAction::triggered, this, [this](){ DialogHelpers::show_fill_clr_dialog(this, canvas, colorFill);});
     connect(widthBdr, &QAction::triggered, this, [this](){ DialogHelpers::show_brdr_wt_dialog(this, canvas);});
-    //need to connect file menu actions to their respective slots for functionality
+    connect(cut, &QAction::triggered, this, [this](){ canvas -> cut(canvas -> get_doc_manager() -> get_current_shape_id());});
+    connect(copy, &QAction::triggered, this, [this](){ canvas -> copy(canvas -> get_doc_manager() -> get_current_shape_id());});
+    connect(paste, &QAction::triggered, this, [this](){ canvas -> paste_at_cursor();});
 }

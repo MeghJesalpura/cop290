@@ -11,9 +11,15 @@ namespace mainSpace{
     void Circle::move_shape(double x, double y){
         center_.x = x;
         center_.y = y;
+        position_.x = x - radius_;
+        position_.y = y - radius_;
     }
     void Circle::resize(double new_radius){
         radius_ = new_radius;
+        position_.x = center_.x - radius_;
+        position_.y = center_.y - radius_;
+        width_ = 2*radius_;
+        height_ = 2*radius_;
     }
     void Circle::set_radius(double m_radius){
         radius_ = m_radius;

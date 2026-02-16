@@ -9,7 +9,6 @@
 Canvas::Canvas(QWidget* parent) : QWidget(parent){
     //need to call the base constructor of QWidget
     //setAttribute(Qt::WA_StaticContents);
-    current_shape_id = -1; //initially no shape is selected
     tot_id = 0;
     state_fill_clr = "#FFFFFF"; //default fill color is white
     state_bdr_clr = "#000000"; //default border color is black
@@ -19,6 +18,21 @@ Canvas::Canvas(QWidget* parent) : QWidget(parent){
     mouse_pressed = false;
     setMouseTracking(true); //to track mouse movements even when no button is pressed
     doc_manager = std::make_unique<DocManager>(); //initializing the doc_manager
+}
+DocManager* Canvas::get_doc_manager(){
+    return doc_manager.get();
+}
+void Canvas::cut(int id){
+    doc_manager -> cut_shape(id);
+    update();
+}
+void Canvas::copy(int id){
+    doc_manager -> copy_shape(id);
+}
+void Canvas::paste_at_cursor(){
+    QPoint cursor_pos = mapFromGlobal(QCursor::pos());
+    doc_manager -> paste_shape(cursor_pos.x(), cursor_pos.y());
+    update();
 }
 void Canvas::set_fill_clr(std::string m_fill_clr){
     state_fill_clr = m_fill_clr;
@@ -33,25 +47,27 @@ void Canvas::set_current_tool(int m_tool){
     current_tool = m_tool;
 }
 void Canvas::set_current_shape_id(int m_shape_id){
-    current_shape_id = m_shape_id;
+    doc_manager -> set_current_shape_id(m_shape_id);
 }
 void Canvas::paintEvent(QPaintEvent* event){
     QPainter painter(this);
     //Here we will iterate through the list of shapes and call their draw method to render them on the canvas
     painter.setRenderHint(QPainter::Antialiasing); //inbuilt method to make the shapes look smoother
     for(auto& render_shape: doc_manager -> get_all_shapes()){
-        if(render_shape -> get_id() != current_shape_id || !mouse_pressed){//to avoid drawing the shape being currently drawn/moved in the list of shapes
+        if(render_shape -> get_id() != doc_manager -> get_current_shape_id() || !mouse_pressed){//to avoid drawing the shape being currently drawn/moved in the list of shapes
             render_shape->draw(painter);//rendering all the shapes
         }
     }
-    if(current_shape_id != -1 && selected_shape != nullptr){
+    if(doc_manager -> get_current_shape_id() != -1 && doc_manager -> get_selected_shape(doc_manager -> get_current_shape_id()) != nullptr){
+        mainSpace::GraphicClass* selected_shape = doc_manager -> get_selected_shape(doc_manager -> get_current_shape_id());
         QRectF bounds = selected_shape -> getBoundingBox();
         painter.setPen(QPen(Qt::white, 1, Qt::DashLine));
         painter.setBrush(Qt::NoBrush);
         painter.drawRect(bounds);
     }
     if(mouse_pressed && (current_tool == 0 || current_tool == -1)){
-        if(current_shape_id != -1 && selected_shape != nullptr){
+        if(doc_manager -> get_current_shape_id() != -1 && doc_manager -> get_selected_shape(doc_manager -> get_current_shape_id()) != nullptr){
+            mainSpace::GraphicClass* selected_shape = doc_manager -> get_selected_shape(doc_manager -> get_current_shape_id());
             if(current_mode == 1){//resize mode
                 draw_preview(painter, selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
             }
@@ -80,7 +96,7 @@ void Canvas::mousePressEvent(QMouseEvent* event){
         mouse_pressed = true;
         last_point = event->pos();
         if(current_tool == 0 || current_tool == -1){
-            selected_shape = nullptr;
+            doc_manager -> set_current_shape_id(-1);
             //right now going in reverse order - but later will implement Z axis based implementation to select topmost shape
             bool flag_got = false;
             auto& lshapes = doc_manager -> get_all_shapes_mutable();
@@ -91,13 +107,12 @@ void Canvas::mousePressEvent(QMouseEvent* event){
                     if(auto* circle_ = dynamic_cast<mainSpace::Circle*>(temp_ptr)){
                         current_mode = circle_ -> get_mode(event -> pos());
                     }
-                    current_shape_id = (*it) -> get_id();
-                    selected_shape = temp_ptr;//storing a raw pointer to the selected shape
+                    doc_manager -> set_current_shape_id((*it) -> get_id());
                     break;
                 }
             }
             if(flag_got == false){
-                current_shape_id = -1;
+                doc_manager -> set_current_shape_id(-1);
             }
         }
     }
@@ -112,7 +127,8 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event){
         mouse_pressed = false;
         //need to add new shape object here
         if(current_tool == 0 || current_tool == -1){
-            if(current_shape_id != -1 && selected_shape != nullptr){
+            if(doc_manager -> get_current_shape_id() != -1 && doc_manager -> get_selected_shape(doc_manager -> get_current_shape_id()) != nullptr){
+                mainSpace::GraphicClass* selected_shape = doc_manager -> get_selected_shape(doc_manager -> get_current_shape_id());
                 if(current_mode == 0){//resize mode
                     obj_modify(selected_shape -> get_tool(), last_point, mapFromGlobal(QCursor::pos()), current_mode, selected_shape);
                 }
@@ -122,7 +138,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent* event){
             }
         }
         else if(current_tool >= 1 && current_tool <= 6){
-            doc_manager -> add_shape(objCreate(current_tool, last_point, event->pos(), tot_id, state_fill_clr, state_bdr_clr, state_bdr_wt));
+            doc_manager -> add_shape(objCreate(current_tool, last_point, event->pos(), doc_manager -> get_new_id(), state_fill_clr, state_bdr_clr, state_bdr_wt));
         }
         else if(current_tool == 7){
             //freehand tool

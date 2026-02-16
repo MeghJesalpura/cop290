@@ -38,3 +38,10 @@ void VecManager::clear_shapes(){
 void VecManager::restore_shapes(std::vector<std::unique_ptr<mainSpace::GraphicClass>>& shapes){
     lshapes = std::move(shapes);
 }
+int VecManager::get_new_id(){
+    int next_id = 0;
+    if(lshapes.size() > 0){
+        next_id = lshapes.back() -> get_id() + 1;
+    }
+    return next_id;
+}

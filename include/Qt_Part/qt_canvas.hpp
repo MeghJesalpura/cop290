@@ -12,14 +12,12 @@ class Canvas : public QWidget {
         std::string state_fill_clr;
         std::string state_bdr_clr;
         double state_bdr_wt;
-        int current_shape_id;
         int tot_id;
         int current_tool; //-1 for none, 0 for Select, 1 for Rectangle, 2 for Rounded Rectangle, ... and so on as per the order in toolbar
         int current_mode; // 0 for move, 1 for resize - only used when current_tool is -1 or 0 i.e. select tool is active
         bool mouse_pressed;
         QPoint last_point; //to keep track of the last point for drawing and moving shapes
         std::unique_ptr<DocManager> doc_manager; //to manage the shapes and their states for undo/redo and cut/copy/paste functionalities
-        mainSpace::GraphicClass* selected_shape;
 
     public:
         Canvas(QWidget* parent = nullptr);
@@ -33,5 +31,9 @@ class Canvas : public QWidget {
         void mousePressEvent(QMouseEvent* event) override;
         void mouseMoveEvent(QMouseEvent* event) override; 
         void mouseReleaseEvent(QMouseEvent* event) override;
+        void cut(int id);
+        void copy(int id);
+        void paste_at_cursor();
+        DocManager* get_doc_manager();
 };
 #endif

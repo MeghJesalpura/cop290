@@ -27,6 +27,11 @@ set(PROJECT_SOURCES
     ./source/DocManager/doc_manager.cpp
     ./source/DocManager/vec_manager.cpp
     ./source/DocManager/action_manager.cpp
+    ./source/DocManager/shape_positioner.cpp
+    ./source/Shapes/rectangle.cpp
+    ./source/Shapes/line.cpp
+    ./source/Shapes/roundedRectangle.cpp
+    ./source/Shapes/hexagon.cpp
 )
 
 set(PROJECT_HEADERS
@@ -40,7 +45,12 @@ set(PROJECT_HEADERS
     ./include/Qt_Part/qt_canvas_objModify.hpp
     ./include/DocManager/doc_manager.hpp
     ./include/DocManager/vec_manager.hpp
-    ./include/DocManager/action_manager.hpp)
+    ./include/DocManager/action_manager.hpp
+    ./include/DocManager/shape_positioner.hpp
+    ./include/Shapes/rectangle.hpp
+    ./include/Shapes/line.hpp
+    ./include/Shapes/roundedRectangle.hpp
+    ./include/Shapes/hexagon.hpp)
 
 add_executable(SVGEditor
     ${PROJECT_SOURCES}
